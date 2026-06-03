@@ -10,10 +10,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node ./node_modules/vitest/vitest.mjs run",
+    "test:watch": "node ./node_modules/vitest/vitest.mjs",
+    "test:coverage": "node ./node_modules/vitest/vitest.mjs run --coverage"
   },
   "dependencies": {
-    "html-to-image": "^1.11.13",
     "pinia": "^3.0.4",
     "vue": "^3.5.34",
     "vue-router": "^4.6.3"
@@ -22,9 +24,11 @@
     "@types/node": "^24.12.3",
     "@vitejs/plugin-vue": "^6.0.6",
     "@vue/tsconfig": "^0.9.1",
+    "@vitest/coverage-v8": "^3.2.4",
     "sass": "^1.94.0",
     "typescript": "~6.0.2",
     "vite": "^8.0.12",
+    "vitest": "^3.2.4",
     "vue-tsc": "^3.2.8"
   }
 }

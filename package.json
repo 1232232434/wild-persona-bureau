@@ -12,6 +12,9 @@
     "dev:server": "npm --prefix server run dev",
     "start:server": "npm --prefix server start",
     "build": "npm --prefix app run build",
-    "preview:app": "npm --prefix app run preview"
+    "preview:app": "npm --prefix app run preview",
+    "test": "npm --prefix app run test",
+    "test:coverage": "npm --prefix app run test:coverage",
+    "verify": "npm run build && npm run test:coverage"
   }
 }

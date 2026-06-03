@@ -12,7 +12,7 @@
 - 用户不是在答考试题，而是在场景里暴露自己的本能反应
 - 前端完成 `题目 -> 五维评分 -> 原型匹配 -> 结果海报` 的完整链路
 - 后端已接入 `Cloudflare Workers AI` 免费模型，并真实验证通过
-- 仓库不是只有代码，还能直接展示 `Spec / Plan / Task` 三文档协同开发方法
+- 仓库不是只有代码，还能直接展示 `Spec / Plan / Task` 三文档和单元测试如何协同交付
 
 ## 为什么它更容易让评委记住
 
@@ -68,7 +68,7 @@ flowchart TD
 ### 4. GitHub 也能当答辩材料
 
 - 仓库首页可直接说明产品价值、技术路线和演示顺序
-- `docs/` 下保留完整的 `Spec / Plan / Task`
+- 根目录 `交付材料/` 下集中放置 `Spec / Plan / Task` 与单元测试
 - 评委即使不运行项目，也能快速看懂方法和亮点
 
 ## 当前完成度
@@ -81,6 +81,7 @@ flowchart TD
 - 已实现 Node 原生后端代理层
 - 已通过 `Cloudflare Workers AI` 免费模型真实联调
 - 已加入低质量文案检测与自动回退策略
+- 已补齐核心单元测试，覆盖题库抽取、评分逻辑与叙事回退
 - 已通过前端构建验证和后端本地烟雾测试
 
 ## 演示顺序建议
@@ -89,15 +90,16 @@ flowchart TD
 2. 进入测试页，展示场景题而不是常规题库
 3. 快速完成几题，说明五维评分和原型匹配逻辑
 4. 打开结果页，展示 AI 叙事、五维曲线和分享卡导出
-5. 最后回到 GitHub，展示 `Spec / Plan / Task` 三文档和工程结构
+5. 最后回到 GitHub，展示 `交付材料/` 里的 `Spec / Plan / Task` 与单元测试结构
 
 更完整的话术资产见：[GitHub Showcase Kit](docs/github-showcase.md)
 
 ## SDD 文档
 
-- [Spec](docs/spec.md)
-- [Plan](docs/plan.md)
-- [Task](docs/task.md)
+- [Spec](交付材料/spec.md)
+- [Plan](交付材料/plan.md)
+- [Task](交付材料/task.md)
+- [单元测试目录](交付材料/单元测试)
 
 职责边界：
 
@@ -186,10 +188,16 @@ npm run build
 ```text
 .
 ├─ docs/
+│  ├─ final-test-kit.md
+│  └─ github-showcase.md
+├─ 交付材料/
 │  ├─ spec.md
 │  ├─ plan.md
 │  ├─ task.md
-│  └─ github-showcase.md
+│  └─ 单元测试/
+│     ├─ personaNarrator.test.ts
+│     ├─ questionBank.test.ts
+│     └─ scoring.test.ts
 ├─ app/
 │  ├─ .env.example
 │  ├─ package.json
