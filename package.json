@@ -1,0 +1,17 @@
+{
+  "name": "wild-persona-bureau-workspace",
+  "private": true,
+  "version": "0.0.0",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "scripts": {
+    "setup": "npm --prefix app install && npm --prefix server install",
+    "dev:app": "npm --prefix app run dev",
+    "dev:server": "npm --prefix server run dev",
+    "start:server": "npm --prefix server start",
+    "build": "npm --prefix app run build",
+    "preview:app": "npm --prefix app run preview"
+  }
+}
