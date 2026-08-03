@@ -61,7 +61,7 @@ describe('scoring', () => {
     expect(profile).not.toBeNull()
     expect(profile?.confidence.score).toBeGreaterThanOrEqual(48)
     expect(profile?.rarity.score).toBeGreaterThanOrEqual(28)
-    expect(profile?.adjacent.title).toContain('你更像')
+    expect(profile?.adjacent.title).toContain('你的主动物')
     expect(profile?.adjacent.sharedSignalLabels.length).toBeGreaterThan(0)
     expect(profile?.adjacent.decisiveSignalLabel.length).toBeGreaterThan(0)
   })

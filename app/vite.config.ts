@@ -6,6 +6,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const proxyTarget = env.VITE_DEV_PROXY_TARGET?.trim()
+  const basePath = env.VITE_BASE_PATH?.trim() || '/'
   const baseServer = {
     fs: {
       allow: ['..'],
@@ -13,6 +14,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    base: basePath,
     plugins: [vue()],
     test: {
       environment: 'node',

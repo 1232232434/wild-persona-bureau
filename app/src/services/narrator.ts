@@ -35,6 +35,10 @@ const fallbackMockDelayMs = 900
 const fallbackProxyTimeoutMs = 3500
 const lowSignalPhrases = [
   '很有价值',
+  '模型',
+  '原型',
+  '稀有度',
+  '相邻原型',
   '市场趋势',
   '消费者',
   '高效沟通',

@@ -88,6 +88,56 @@ const reportCode = computed(() => {
 
 const adjacentSharedLabelText = computed(() => resultProfile.value?.adjacent.sharedSignalLabels.join(' / ') ?? '')
 
+const lifeReadingCards = computed(() => {
+  if (!activeResult.value) {
+    return []
+  }
+
+  return [
+    {
+      title: '性格底色',
+      text: activeResult.value.personality,
+    },
+    {
+      title: '爱情模式',
+      text: activeResult.value.love,
+    },
+    {
+      title: '学业 / 事业趋势',
+      text: activeResult.value.career,
+    },
+  ]
+})
+
+const animalReadingCards = computed(() => {
+  if (!activeResult.value) {
+    return []
+  }
+
+  return [
+    {
+      title: `${activeResult.value.animal}给人的第一感觉`,
+      text: activeResult.value.animalProfile.vibe,
+    },
+    {
+      title: '对应到你的性格',
+      text: activeResult.value.animalProfile.personality,
+    },
+    {
+      title: '放到爱情里',
+      text: activeResult.value.animalProfile.love,
+    },
+    {
+      title: '放到学业和事业里',
+      text: activeResult.value.animalProfile.career,
+    },
+    {
+      title: '最容易卡住你的点',
+      text: activeResult.value.animalProfile.blindSpot,
+    },
+  ]
+})
+
 const narrationSeed = computed(() => {
   if (!activeResult.value) {
     return null
@@ -289,15 +339,15 @@ const exportShareCard = async () => {
 
         <div class="kpi-grid dossier-summary__grid">
           <div class="kpi-card">
-            <span class="muted-label">结果置信度</span>
+            <span class="muted-label">像不像你</span>
             <strong>{{ resultProfile?.confidence.label ?? '分析中' }}</strong>
           </div>
           <div class="kpi-card">
-            <span class="muted-label">模型内稀有度</span>
+            <span class="muted-label">人设记忆点</span>
             <strong>{{ resultProfile?.rarity.label ?? '分析中' }}</strong>
           </div>
           <div class="kpi-card">
-            <span class="muted-label">相邻原型</span>
+            <span class="muted-label">隐藏副属性</span>
             <strong>{{ activeRunnerUp?.animal ?? '待分析' }}</strong>
           </div>
         </div>
@@ -312,7 +362,7 @@ const exportShareCard = async () => {
 
     <section v-if="resultProfile" class="signal-grid">
       <article class="panel signal-card">
-        <div class="muted-label">结果置信度</div>
+        <div class="muted-label">像不像你</div>
         <div class="signal-card__score-row">
           <strong>{{ resultProfile.confidence.score }}</strong>
           <span>/ 100</span>
@@ -323,7 +373,7 @@ const exportShareCard = async () => {
       </article>
 
       <article class="panel signal-card">
-        <div class="muted-label">模型内稀有度</div>
+        <div class="muted-label">人设记忆点</div>
         <div class="signal-card__score-row">
           <strong>{{ resultProfile.rarity.score }}</strong>
           <span>/ 100</span>
@@ -334,16 +384,40 @@ const exportShareCard = async () => {
       </article>
 
       <article class="panel signal-card signal-card--wide">
-        <div class="muted-label">相邻人格解释</div>
+        <div class="muted-label">隐藏副属性解析</div>
         <h3>{{ resultProfile.adjacent.title }}</h3>
         <p>{{ resultProfile.adjacent.summary }}</p>
         <div class="tag-list signal-card__tags">
           <span class="tag">共同底色：{{ adjacentSharedLabelText }}</span>
-          <span class="tag">真正分野：{{ resultProfile.adjacent.decisiveSignalLabel }}</span>
-          <span class="tag">最明显的你：{{ dimensionMeta[dominantDimension[0]].label }}</span>
+          <span class="tag">关键差别：{{ resultProfile.adjacent.decisiveSignalLabel }}</span>
+          <span class="tag">最强倾向：{{ dimensionMeta[dominantDimension[0]].label }}</span>
         </div>
       </article>
     </section>
+
+    <section class="life-reading-grid">
+      <article v-for="card in lifeReadingCards" :key="card.title" class="panel life-reading-card">
+        <div class="muted-label">{{ card.title }}</div>
+        <p>{{ card.text }}</p>
+      </article>
+    </section>
+
+    <article class="panel animal-panel">
+      <div class="muted-label">动物人格详解</div>
+      <div class="animal-panel__heading">
+        <div>
+          <h2>{{ activeResult.animal }}不是随便贴的标签</h2>
+          <p>这部分把动物气质翻译成你能直接看懂的生活表现，重点看性格、爱情和学业事业里的具体样子。</p>
+        </div>
+        <span>{{ activeResult.animal }}</span>
+      </div>
+      <div class="animal-reading-grid">
+        <article v-for="card in animalReadingCards" :key="card.title" class="animal-reading-card">
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.text }}</p>
+        </article>
+      </div>
+    </article>
 
     <article class="panel narrative-panel">
       <div class="narrative-panel__top">
@@ -503,6 +577,24 @@ const exportShareCard = async () => {
   margin-top: 12px;
 }
 
+.result-shell .muted-label {
+  font-weight: 800;
+}
+
+.result-shell .panel h2,
+.result-shell .panel h3,
+.result-shell .panel h4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.result-shell .panel p,
+.result-list__item,
+.signal-card small {
+  font-size: 0.98rem;
+}
+
 .result-banner {
   display: grid;
   grid-template-columns: minmax(0, 0.98fr) minmax(360px, 1.02fr);
@@ -536,8 +628,9 @@ const exportShareCard = async () => {
   margin: 2px 0 0;
   color: rgba(243, 234, 214, 0.78);
   font-family: var(--font-display);
-  font-size: 1.3rem;
-  letter-spacing: 0.18em;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 .dossier-poster__tags {
@@ -630,7 +723,7 @@ const exportShareCard = async () => {
 
 .signal-card h3 {
   margin: 16px 0 0;
-  font-size: 1.12rem;
+  font-size: clamp(1.32rem, 2.2vw, 1.78rem);
 }
 
 .signal-card p {
@@ -643,7 +736,6 @@ const exportShareCard = async () => {
   display: block;
   margin-top: 14px;
   color: rgba(188, 174, 144, 0.72);
-  font-size: 0.8rem;
   line-height: 1.7;
 }
 
@@ -660,6 +752,7 @@ const exportShareCard = async () => {
 
 .narrative-panel__heading {
   margin: 8px 0 0;
+  font-size: clamp(1.45rem, 2.3vw, 2rem);
 }
 
 .narrative-status {
@@ -748,7 +841,97 @@ const exportShareCard = async () => {
 .narrative-card p {
   margin: 8px 0 0;
   color: var(--muted);
+  font-size: 0.98rem;
   line-height: 1.74;
+}
+
+.life-reading-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.life-reading-card h3 {
+  margin: 10px 0 0;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+}
+
+.life-reading-card p {
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.78;
+}
+
+.animal-panel {
+  overflow: hidden;
+}
+
+.animal-panel__heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.animal-panel__heading h2,
+.animal-panel__heading p {
+  margin: 0;
+}
+
+.animal-panel__heading h2 {
+  font-size: clamp(1.9rem, 3vw, 2.7rem);
+  line-height: 1.2;
+}
+
+.animal-panel__heading p {
+  max-width: 780px;
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.78;
+}
+
+.animal-panel__heading span {
+  flex: 0 0 auto;
+  padding: 14px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--accent);
+  background: rgba(214, 191, 134, 0.07);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 800;
+}
+
+.animal-reading-grid {
+  margin-top: 22px;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.animal-reading-card {
+  padding: 18px 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.animal-reading-card h3,
+.animal-reading-card p {
+  margin: 0;
+}
+
+.animal-reading-card h3 {
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  line-height: 1.35;
+}
+
+.animal-reading-card p {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.76;
 }
 
 .narrative-card--loading {
@@ -806,7 +989,7 @@ const exportShareCard = async () => {
 
 .result-note h4 {
   margin-top: 8px;
-  font-size: 1.04rem;
+  font-size: clamp(1.22rem, 2vw, 1.55rem);
 }
 
 .result-note p {
@@ -887,6 +1070,7 @@ const exportShareCard = async () => {
 
 @media (max-width: 1080px) {
   .signal-grid,
+  .life-reading-grid,
   .result-banner,
   .result-grid {
     grid-template-columns: 1fr;
@@ -898,8 +1082,13 @@ const exportShareCard = async () => {
 
   .narrative-panel__top,
   .narrative-panel__intro,
+  .animal-panel__heading,
   .narrative-grid {
     display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .animal-reading-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -907,6 +1096,7 @@ const exportShareCard = async () => {
 @media (max-width: 640px) {
   .dossier-summary__grid,
   .signal-grid,
+  .life-reading-grid,
   .narrative-grid {
     grid-template-columns: 1fr;
   }

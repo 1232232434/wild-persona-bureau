@@ -5,7 +5,7 @@ import ResultPage from '../pages/ResultPage.vue'
 import TestPage from '../pages/TestPage.vue'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'home', component: HomePage },
     { path: '/test', name: 'test', component: TestPage },

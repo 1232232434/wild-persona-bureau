@@ -330,8 +330,8 @@ export const renderResultPoster = async (payload: ResultPosterPayload) => {
 
   context.fillStyle = palette.muted
   context.font = '500 22px "Sora", "Segoe UI", sans-serif'
-  context.fillText(`相邻原型：${payload.runnerUp.animal}`, metaCardX + 34, infoCardY + 184)
-  context.fillText(`最明显的你：${payload.dominantDimensionLabel}`, metaCardX + 34, infoCardY + 218)
+  context.fillText(`隐藏副属性：${payload.runnerUp.animal}`, metaCardX + 34, infoCardY + 184)
+  context.fillText(`最强倾向：${payload.dominantDimensionLabel}`, metaCardX + 34, infoCardY + 218)
 
   const metricsY = infoCardY + 280
   const metricGap = 18
@@ -340,19 +340,19 @@ export const renderResultPoster = async (payload: ResultPosterPayload) => {
 
   const metricCards = [
     {
-      title: '结果置信度',
+      title: '像不像你',
       score: payload.confidence?.score ?? payload.match,
-      label: payload.confidence?.label ?? '轮廓稳定成型',
-      summary: payload.confidence?.summary ?? '你的主要选择正在往同一个人格方向收束。',
+      label: payload.confidence?.label ?? '主线很清楚',
+      summary: payload.confidence?.summary ?? '你的主要选择正在指向同一种气质。',
     },
     {
-      title: '模型内稀有度',
+      title: '人设记忆点',
       score: payload.rarity?.score ?? 58,
-      label: payload.rarity?.label ?? '辨识度偏高',
-      summary: payload.rarity?.summary ?? '你的组合在这套图谱里有比较清楚的个人棱角。',
+      label: payload.rarity?.label ?? '辨识度很高',
+      summary: payload.rarity?.summary ?? '你的组合有比较清楚的个人味道。',
     },
     {
-      title: '相邻人格',
+      title: '隐藏副属性',
       score: payload.runnerUpMatch,
       label: payload.runnerUp.animal,
       summary: payload.adjacentInsightTitle,
@@ -371,7 +371,7 @@ export const renderResultPoster = async (payload: ResultPosterPayload) => {
     context.fillText(String(card.score), cardX + 24, metricsY + 56)
     context.fillStyle = palette.muted
     context.font = '500 18px "Sora", "Segoe UI", sans-serif'
-    context.fillText(card.title === '相邻人格' ? '相似匹配' : '/ 100', cardX + 110, metricsY + 84)
+    context.fillText(card.title === '隐藏副属性' ? '相似度' : '/ 100', cardX + 110, metricsY + 84)
 
     context.fillStyle = palette.text
     context.font = '600 26px "Noto Serif SC", "Microsoft YaHei", serif'

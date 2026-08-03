@@ -23,6 +23,16 @@ export interface Archetype {
   title: string
   summary: string
   habitat: string
+  personality: string
+  love: string
+  career: string
+  animalProfile: {
+    vibe: string
+    personality: string
+    love: string
+    career: string
+    blindSpot: string
+  }
   traits: string[]
   strengths: string[]
   advice: string[]

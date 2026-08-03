@@ -1,13 +1,14 @@
 export const personaNarrationSchema = {
   type: 'object',
   additionalProperties: false,
-  required: ['opener', 'fieldNote', 'pressurePattern', 'socialPattern', 'growthEdge', 'shareLine'],
+  required: ['opener', 'fieldNote', 'pressurePattern', 'socialPattern', 'growthEdge', 'actionAdvice', 'shareLine'],
   properties: {
     opener: { type: 'string' },
     fieldNote: { type: 'string' },
     pressurePattern: { type: 'string' },
     socialPattern: { type: 'string' },
     growthEdge: { type: 'string' },
+    actionAdvice: { type: 'string' },
     shareLine: { type: 'string' },
   },
 }

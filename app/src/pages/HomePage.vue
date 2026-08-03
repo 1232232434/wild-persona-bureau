@@ -6,8 +6,9 @@ import { archetypes } from '../data/quiz'
 
 const router = useRouter()
 
-const heroArchetypes = computed(() => archetypes.slice(0, 4))
-const atlasArchetypes = computed(() => archetypes.slice(0, 6))
+const archetypeCount = computed(() => archetypes.length)
+const heroArchetypes = computed(() => archetypes.slice(0, 6))
+const atlasArchetypes = computed(() => archetypes)
 
 const beginExperiment = () => {
   router.push('/test?fresh=1')
@@ -22,7 +23,7 @@ const beginExperiment = () => {
       <h1 class="headline">野性人格局</h1>
       <p class="hero-card__cn">用真实生活情境，测出你在压力、关系与选择里的本能风格</p>
       <p class="subcopy">
-        你会在十个贴近现实的场景里做选择，比如临时加急、朋友冷场、边界被踩、功劳被拿走。系统会把你的反应映射成动物人格原型，再给你一份可分享、也更像在说你的结果档案。
+        你会在十个贴近现实的场景里做选择，比如临时加急、朋友冷场、边界被踩、功劳被拿走。系统会把你的反应映射成动物人格，再给你一份可分享、也更像在说你的结果档案。
       </p>
 
       <div class="button-row">
@@ -32,7 +33,7 @@ const beginExperiment = () => {
 
       <div class="tag-list hero-card__tags">
         <span class="tag">10 个情境题</span>
-        <span class="tag">8 种野性原型</span>
+        <span class="tag">{{ archetypeCount }} 种动物人格</span>
         <span class="tag">沉浸式档案结果页</span>
         <span class="tag">三文档协同开发</span>
       </div>
@@ -60,7 +61,7 @@ const beginExperiment = () => {
 
       <div class="signal-card__core">
         <span>本能反应堆</span>
-        <strong>8 种原型</strong>
+        <strong>{{ archetypeCount }} 种动物</strong>
         <small>压力 / 冒险 / 节奏 / 回充</small>
       </div>
 
@@ -134,7 +135,7 @@ const beginExperiment = () => {
           <span>03</span>
           <div>
             <strong>映射结构维度</strong>
-            <p>每次选择都会沉淀成五维画像，再和八种动物原型进行匹配。</p>
+            <p>每次选择都会沉淀成五维画像，再和不同动物人格进行匹配。</p>
           </div>
         </div>
         <div class="process-item">
@@ -148,8 +149,8 @@ const beginExperiment = () => {
     </article>
 
     <article class="panel atlas-panel">
-      <div class="muted-label">原型图鉴</div>
-      <h3>每一种结果都有自己独立的生态位。</h3>
+      <div class="muted-label">动物图鉴</div>
+      <h3>每一种结果都有自己独立的性格气质。</h3>
       <div class="atlas-ribbon">
         <span v-for="archetype in heroArchetypes" :key="archetype.id" class="atlas-chip">
           {{ archetype.animal }}

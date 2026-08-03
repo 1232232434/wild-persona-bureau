@@ -20,24 +20,24 @@ const directionOf = (value: number) => (value >= 50 ? 'high' : 'low')
 
 const dimensionBehaviorCopy: Record<DimensionKey, { high: string; low: string }> = {
   social: {
-    high: '会主动把人和节奏带起来',
-    low: '会先守住自己的判断通道',
+    high: '更容易主动把气氛带起来',
+    low: '更习惯先观察再靠近',
   },
   risk: {
-    high: '更愿意先抓窗口再补路径',
-    low: '更愿意先算成本和退路',
+    high: '敢先迈出去试一把',
+    low: '会先确认代价和退路',
   },
   stress: {
-    high: '受压时会直接接住局面',
-    low: '受压时会先收住自己',
+    high: '压力越大越容易正面处理',
+    low: '压力越大越需要先缓一口气',
   },
   tempo: {
-    high: '更习惯边做边调',
-    low: '更习惯看清再启动',
+    high: '喜欢边做边调整',
+    low: '喜欢想清楚再开始',
   },
   energy: {
-    high: '一重新掌控就会慢慢回电',
-    low: '一安静下来就会慢慢回电',
+    high: '掌控住局面就会回电',
+    low: '独处安静下来就会回电',
   },
 }
 
@@ -108,35 +108,35 @@ const buildConfidenceMetric = (
   if (score >= 84) {
     return {
       score,
-      label: '轮廓非常清晰',
-      summary: '你的大多数选择都在把结果往同一个方向推，所以这一型不是偶然撞中的。',
-      detail: `你和相邻原型拉开了 ${margin} 分，五个维度里有 ${alignedDimensions} 个维度明显贴近主原型。`,
+      label: '很像你本人',
+      summary: '你的大多数选择都在指向同一种气质，所以这个结果不是随便凑出来的。',
+      detail: `你和第二高的动物人格拉开了 ${margin} 分，五个维度里有 ${alignedDimensions} 个都很贴近当前结果。`,
     }
   }
 
   if (score >= 70) {
     return {
       score,
-      label: '轮廓稳定成型',
-      summary: '你的主原型已经很明显，但你身上还保留了一点相邻人格的弹性和层次。',
-      detail: `你和相邻原型相差 ${margin} 分，说明你的主结果清楚，但并不是单线条的人。`,
+      label: '主线很清楚',
+      summary: '你的主要性格方向已经很明显，同时还保留了一点副属性，所以结果不会显得单薄。',
+      detail: `你和第二高的动物人格相差 ${margin} 分，说明你有明确主线，但不是只有一种面孔。`,
     }
   }
 
   if (score >= 56) {
     return {
       score,
-      label: '混合但可辨认',
-      summary: '你不是没有主型，而是你会随场景切换做法，所以结果会带一点自然的混合感。',
-      detail: `你和相邻原型只差 ${margin} 分，这通常意味着你在不同生活场景里会显出两套相近的应对方式。`,
+      label: '有两种面向',
+      summary: '你不是测不准，而是你在不同场景里会切换不同状态，所以看起来有一点混合感。',
+      detail: `你和第二高的动物人格只差 ${margin} 分，说明你在生活里可能会同时表现出两套相近的反应。`,
     }
   }
 
   return {
     score,
-    label: '过渡型结果',
-    summary: '你现在更像两种人格风格并行，所以这份结果更适合拿来观察你最近的状态变化。',
-    detail: `你和相邻原型只差 ${margin} 分，说明你最近的选择还没有完全收束成单一风格。`,
+    label: '最近状态偏混合',
+    summary: '你现在更像几种状态一起出现，可能和最近压力、心情或生活阶段有关。',
+    detail: `你和第二高的动物人格只差 ${margin} 分，说明你最近还没有完全固定在单一风格里。`,
   }
 }
 
@@ -150,35 +150,35 @@ const buildRarityMetric = (scores: DimensionScores, result: RankedArchetype): Re
   if (score >= 75) {
     return {
       score,
-      label: '模型内少见',
-      summary: '在这套八型图谱里，你的组合辨识度很高，不太容易和别人撞成同一种气质。',
-      detail: '这只是当前八种原型里的模型内稀有度，不代表真实人口比例。',
+      label: '人设很有记忆点',
+      summary: '你的气质不太像普通模板，别人和你相处之后，通常会记得你身上很鲜明的那一面。',
+      detail: '这个分数看的是你五个维度的鲜明程度，不是现实人群比例，也不是谁更高级。',
     }
   }
 
   if (score >= 58) {
     return {
       score,
-      label: '辨识度偏高',
-      summary: '你的轮廓不是大众模板，身上有几处很鲜明的偏向，所以别人通常会记住你的风格。',
-      detail: '这只是当前八种原型里的模型内稀有度，不代表真实人口比例。',
+      label: '辨识度很高',
+      summary: '你不是那种完全没棱角的人，身上有几个明显特点，容易被朋友用一句话概括出来。',
+      detail: '这个分数看的是你五个维度的鲜明程度，不是现实人群比例，也不是谁更高级。',
     }
   }
 
   if (score >= 42) {
     return {
       score,
-      label: '有个人棱角',
-      summary: '你的结构不靠极端感取胜，但你依然有稳定而清楚的个人棱角，不会显得模糊。',
-      detail: '这只是当前八种原型里的模型内稀有度，不代表真实人口比例。',
+      label: '耐看型人设',
+      summary: '你的风格不是第一眼特别夸张，但越相处越能看出稳定、清楚的个人味道。',
+      detail: '这个分数看的是你五个维度的鲜明程度，不是现实人群比例，也不是谁更高级。',
     }
   }
 
   return {
     score,
-    label: '均衡耐看',
-    summary: '你的组合更偏均衡耐用，不靠夸张对比吸引注意，而是靠稳定和连续性让人信任。',
-    detail: '这只是当前八种原型里的模型内稀有度，不代表真实人口比例。',
+    label: '低调舒服型',
+    summary: '你的风格不靠强烈反差吸引注意，更像是相处起来稳定、舒服、不会太压迫的类型。',
+    detail: '这个分数看的是你五个维度的鲜明程度，不是现实人群比例，也不是谁更高级。',
   }
 }
 
@@ -232,8 +232,8 @@ const buildAdjacentPersonaInsight = (
       : `你身上同时有${sharedSignalLabels[0]}这一层共同底色，所以你${sharedPhrases[0]}。`
 
   return {
-    title: `你更像${result.animal}，也带着${runnerUp.animal}的一面`,
-    summary: `${sharedSummary}但真正把你推向${result.name}的，是你在${decisiveLabel}上更接近“${decisivePhrase}”这一面。`,
+    title: `你的主动物是${result.animal}，隐藏副属性像${runnerUp.animal}`,
+    summary: `${sharedSummary}但真正让你更像${result.animal}的，是你在${decisiveLabel}上更接近“${decisivePhrase}”这一面。`,
     sharedSignalLabels,
     decisiveSignalLabel: decisiveLabel,
   }

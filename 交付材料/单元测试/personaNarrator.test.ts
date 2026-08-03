@@ -23,7 +23,7 @@ describe('personaNarrator', () => {
       }),
     })
 
-    expect(prompt).toContain('主原型资料')
+    expect(prompt).toContain('主动物人格资料')
     expect(prompt).toContain(archetypes[0].name)
     expect(prompt).toContain(archetypes[1].animal)
     expect(prompt).toContain('输出字段要求')
