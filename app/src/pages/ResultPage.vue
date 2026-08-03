@@ -3,6 +3,7 @@ import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import DimensionMeter from '../components/DimensionMeter.vue'
+import DimensionRadar from '../components/DimensionRadar.vue'
 import { archetypes, dimensionMeta } from '../data/quiz'
 import { createFallbackNarration, type PersonaNarration } from '../prompts/personaNarrator'
 import { generatePersonaNarration, type NarrationResult } from '../services/narrator'
@@ -71,6 +72,14 @@ const resultProfile = computed(() => {
 
 const scoreEntries = computed(
   () => Object.entries(displayedScores.value) as Array<[DimensionKey, number]>,
+)
+
+const radarItems = computed(() =>
+  scoreEntries.value.map(([key, value]) => ({
+    key,
+    label: dimensionMeta[key].label,
+    value,
+  })),
 )
 
 const dominantDimension = computed(() =>
@@ -477,6 +486,7 @@ const exportShareCard = async () => {
     <section class="result-grid">
       <article class="panel">
         <div class="muted-label">你的五维画像</div>
+        <DimensionRadar :items="radarItems" />
         <div class="result-meters">
           <DimensionMeter
             v-for="[key, value] in scoreEntries"
